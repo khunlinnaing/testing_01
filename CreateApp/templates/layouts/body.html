@@ -1,0 +1,22 @@
+{% if user.is_authenticated %}
+<a href="/logout">Logout</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>account</th>
+        <th>Phone</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.role_value }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Please log in.</p>
+{% endif %}
+
