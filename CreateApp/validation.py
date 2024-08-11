@@ -53,8 +53,8 @@ def is_digits_only(input_string):
     return re.match(digits_regex, input_string) is not None
 def registervalidation(values):
     message = []
-    if values['username'] == '':
-        message.append({'username': 'username is require field'})
+    # if values['username'] == '':
+    #     message.append({'username': 'username is require field'})
     if values['email'] == '':
         message.append({'email': 'email is require field'})
     elif not is_valid_email(values['email']):

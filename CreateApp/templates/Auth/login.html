@@ -1,16 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LOGIN</title>
-</head>
-<body>
-<form method="POST">
-    {% csrf_token %}
-    Account: <input type="text" name="username" placeholder="Please Enter Username"><br>
-    Password: <input type="password" name="password" placeholder="Please Enter Password"><br>
-    <button>Login</button>
-    <a href="../register">I don't have account.</a>
-</form>
-</body>
-</html>
+{% extends '../index.html' %}
+<title>{% block title %}Login{% endblock %}</title>
+{% block content %}
+<div class="container">
+
+    <form class="border border-gray px-2 login_form" method="POST">
+        <h3 align="center" class="my-3">Login</h3>
+        {% if message %}
+        <div class="alert alert-danger" role="alert">
+            <li class="text-danger text-center" style="list-style: none;">{{ message }}</li>
+        </div>
+        {% endif %}
+        {% csrf_token%}
+        <div class="mb-3 row">
+            <label for="inputusername" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputusername" name='username'>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="inputpassword" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputpassword" name="password">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-sm-12">
+                <input type="submit" class="form-control btn btn-primary login" value="Login">
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <a href="../register" class="ml-auto text-end">I don't have account.</a>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.login').click(function (e) {
+            $('#inputusername, #inputpassword').siblings('div').remove();
+            e.preventDefault();
+            var check = {}
+            var username = $('#inputusername').val();
+            var password = $('#inputpassword').val();
+            if (username == '') {
+                check.username = 'error'
+                $('#inputusername').after(`<div class="text-danger">Username is required.</div>`)
+            } else {
+                check.username = ''
+                $('#inputusername').siblings('div').remove();
+            }
+            if (password == '') {
+                check.password = 'error'
+                $('#inputpassword').after(`<div class="text-danger">Password is required.</div>`)
+            } else {
+                check.password = ''
+                $('#inputpassword').siblings('div').remove();
+            }
+            console.log(check)
+            if (check.password == '' && check.username == '') {
+                $('.login_form').submit();
+            } else {
+                console.log('err')
+            }
+        })
+    })
+</script>
+{% endblock %}
